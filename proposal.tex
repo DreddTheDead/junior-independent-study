@@ -16,17 +16,48 @@
 
 \maketitle
 
-In your proposal, you will provide justification on why your project matters based on work which has been done in this area, using in-line citations~\cite{clrsAlgorithms} to refer to existing works. Include what your project will accomplish and how your software will function. 
+% In your proposal, you will provide justification on why your project matters, 
+% based on work which has been done in this area, and using in-line citations
+% ( ~\cite{clrsAlgorithms} )to refer to existing works.
+% Include what your project will accomplish and how your software will function. 
+This project is an Agentic AI Hub, with the purpose of streamlining and automating the creation of other automation workflows, a \textit{meta-automation builder} in a sense. Through a natural language (NL) prompt, a Large Language Model (LLM) will parse the user's request, ask questions to decipher any ambiguity, supply a short log behind it's thought process, and create a containerized microservice/workflow to be deployed and reused. User prompting is aimed to create automations through a continuous integration/ deployment (CI/CD) pipeline. 
 
+There are four layers to this process. First is the user interface layer, taking the NL input for a workable output that includes clarification dialouge, final controls, and workflow status updates. The second pertains to the reasoning and workings of the LLM, including its core ability to handle NL and intent-to-action mapping, and logging the thought process behind this through JSON (i.e. two tiers, 'detailed' and 'summary').
+The third layer is the workflow generation, where the Agentic subsytem creates tasks and chooses correct integrations for completing it, and the workflow specifications bring an intermediate representation (IR) in something like YAML or JSON, which an execution engine uses to turn the IR config files into runnable code, generated in Docker containers for each pipeline.
+The boneworks look as such below:
+\begin{enumerate}
+	\item Free Hosting Ideas
+Option A: Local-first execution
+Workflows run on my machine (local Docker).
+
+	\item Open AI Models
+Running locally with open source LLM Ollama, from LLaMA 3.
+
+	\item Free Datastores
+YAML/JSON config files for MVP.
+Flex-Goals:
+	LiteDB/SQLite for local persistent storage.
+	Supabase (unfamiliar with it) for free tier hosting of Postgres.
+
+	\item Credential Handling
+Use local .env files (or Vaultwarden? Don't know much about it, just googled and found it...flex goal again).
+Users manage their own API keys locally.
+
+	\item Transparency Logs
+Store reasoning logs in plain JSON locally (free).
+\end{enumerate}
 
 \newpage
 \section*{Appendix}
-A concise list of features / user stories in the order in which they will be built. A few examples are below to demonstrate the expected scope and level of granularity; you will have more features than this.
+A concise list of features / user stories in the order in which they will be built.
+First example, if a user wanted to create a workflow to summarize emails they receive that are widely varying on content, but rely on the general same themes and schemes (e.g. a Twitch stream notification email), the user would experience the following process:
 \begin{itemize}
-	\item Default picture display on web application.
-	\item On a button-click, user can separate the image into foreground and background.
-	\item User can select a picture from their desktop.
-	\item Selected picture displays on the web application.
+	\item Frontend: Simple web UI (React).
+	\item LLM: Ollama API running LLaMA-3 8B for parsing requests (through Docker containers), flex-goal of logic for discerning 'hard' tasks run through limited free token count of stronger reasoning AI (e.g. GPT-4).
+	\item Workflow Engine: The generated Python scripts, saved locally.
+	\item Execution: Run scripts manually or scheduled via cron/Task Scheduler.
+	\item Connectors: Start with Gmail API + Google Docs API (both free within quota).
+	\item Deployment: GitHub Actions for cloud-like feel (technically optional for now, but is in design metrics of real product).
 \end{itemize}
 
 
